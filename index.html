@@ -20,7 +20,6 @@
 	<button class="chkScore" onclick="checkScore()" style="padding: 20px; background-color: red">ดูคะแนน</button>
 	<div class="score"></div>
 
-
 	<script src="jquery-3.3.1.min.js" charset="utf-8"></script>
 	<script type="text/javascript">
 		var seconds;
@@ -76,7 +75,7 @@
 			$(".chkScore").show();
 			item = -1;
 		}
-		    document.getElementById("counter").value=seconds; 
+		    document.getElementById("counter").value=seconds;
 		    setTimeout("display()",1000);
 		}
 
@@ -98,7 +97,7 @@
 							$('#choiceD').html(response[i].d);
 							string = "";
 							ans.push(response[i].ans);
-							$('#photo').css('content','url('+response[i].image+')');	
+							$('#photo').css('content','url('+response[i].image+')');
 						}
 					});
 				});
