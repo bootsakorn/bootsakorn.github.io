@@ -1,1 +1,132 @@
-Hello World
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>แฟนพันธ์แท้แฮรี่พอตเตอร์</title>
+</head>
+<body>
+	<!-- 	{
+		"ref" : "https://www.proprofs.com/quiz-school/story.php?title=50_83"
+	} -->
+	<input class="counter" type="text" size="8" id="counter" />
+	<button class="chooseNumQ" onclick="chooseQ(10)" style="padding: 20px; background-color: red">10 ข้อ</button>
+	<button class="chooseNumQ" onclick="chooseQ(20)" style="padding: 20px; background-color: blue">20 ข้อ</button>
+	<div id="photo" style="width: 100px; height: 100px;"></div>
+	<div class ="output">Output goes here...</div>
+	<button id="choiceA" class="choice" style="padding: 20px; background-color: red"></button>
+	<button id="choiceB" class="choice" style="padding: 20px; background-color: red"></button>
+	<button id="choiceC" class="choice" style="padding: 20px; background-color: red"></button>
+	<button id="choiceD" class="choice" style="padding: 20px; background-color: red"></button>
+	<button class="chkScore" onclick="checkScore()" style="padding: 20px; background-color: red">ดูคะแนน</button>
+	<div class="score"></div>
+
+
+	<script src="jquery-3.3.1.min.js" charset="utf-8"></script>
+	<script type="text/javascript">
+		var seconds;
+		var item20 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
+		var item;
+		var iNum;
+		var score = 0;
+		var ans = [];
+
+		document.getElementById("counter").value='10';
+		function intro () {
+			$(".output").hide();
+			$(".photo").hide();
+			$(".counter").hide();
+			$(".choice").hide();
+			$(".chkScore").hide();
+			$(".score").hide();
+		}
+		intro();
+		function chooseQ (param) {
+			item = param;
+			$(".chooseNumQ").hide();
+			$(".output").show();
+			$(".photo").show();
+			$(".counter").show();
+			$(".choice").show();
+			seconds = 1;
+			display();
+		}
+		function rand () {
+			var k;
+			let itNum;
+			if (item>0) {
+				item-- ;
+				k = Math.floor(Math.random() * item20.length);
+				itNum = item20[k];
+				item20.splice(k, 1);
+
+			}
+			return itNum;
+		}
+		function display(){
+		    seconds-=1;
+		if(seconds==0 && item>0){
+		 	seconds = 10;
+		 	runQ(rand());
+		}
+		if(seconds<0 && item==0) {
+			$(".counter").hide();
+			$(".output").hide();
+			$(".photo").hide();
+			$(".choice").hide();
+			$(".chkScore").show();
+			item = -1;
+		}
+		    document.getElementById("counter").value=seconds; 
+		    setTimeout("display()",1000);
+		}
+
+		function runQ(i) {
+			$(document).ready(function(){
+					$.ajax({
+						url: 'question.json',
+						method: 'GET',
+						dataType : 'json',
+						success: function(response){
+							let string = "";
+							string += "Question : ";
+							string += response[i].question;
+							string += "<br>";
+							$('.output').html(string);
+							$('#choiceA').html(response[i].a);
+							$('#choiceB').html(response[i].b);
+							$('#choiceC').html(response[i].c);
+							$('#choiceD').html(response[i].d);
+							string = "";
+							ans.push(response[i].ans);
+							$('#photo').css('content','url('+response[i].image+')');	
+						}
+					});
+				});
+		}
+
+		$('.choice').click(function() {
+			if (item>0){
+				seconds = 10;
+		 		runQ(rand());
+			} else {
+				$(".counter").hide();
+				$(".output").hide();
+				$(".photo").hide();
+				$(".choice").hide();
+				$(".chkScore").show();
+				item = -1;
+			}
+			if($(this).html() ==  ans[ans.length-1]){
+				score++;
+				console.log(score);
+			}
+		})
+
+		function checkScore() {
+			$('.score').html(score);
+			$('.score').show();
+			$('.chkScore').hide();
+		}
+	</script>
+</body>
+</html>
