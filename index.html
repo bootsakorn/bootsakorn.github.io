@@ -3,50 +3,171 @@
 <head>
 	<meta charset="utf-8">
 	<title>แฟนพันธ์แท้แฮรี่พอตเตอร์</title>
+	<style type="text/css">
+		@font-face {
+			font-family: harry;
+			src: url("Sarun-s-HarryPotter.ttf");
+		}
+		@font-face {
+			font-family: fontcraft;
+			src: url("Fontcraft.ttf");
+		}
+		body {
+			background-color: black;
+		}
+		#logo {
+			display: block;
+			margin: 20px auto;
+			font-size: 150px;
+			text-align: center;
+			color : white;
+			text-shadow: 10px 10px 20px black, 10px 10px 5px gray;
+			font-family: harry;
+		}
+		.bg {
+			background-image: url("image/bg-game2.jpg");
+			font-family: fontcraft;
+			background-repeat: no-repeat;
+		    background-position: 50% 50%;
+		    background-attachment: fixed;
+		    width: 100%;
+		    height: 600px;
+		    display: inline-block;
+		    margin: 5px auto;
+		    overflow: auto;
+		}
+		.chooseNumQ {
+			display: block;
+			margin: 20px auto;
+			font-family: fontcraft;
+			font-weight: bold;
+			font-size: 40px;
+			width: 200px;
+			height: 100px;
+			border: 2px;
+			border-color: gray;
+			border-style: outset;
+		}
+		.game {
+			display: block;
+			margin: 10px auto;
+		}
+		.counter {
+			text-align: center;
+			font-family: fontcraft;
+			font-size: 40px;
+			color: black;
+			background-color: white;
+			border: 2px;
+			padding: 20px;
+			margin: 20px;
+			display: inline-block;
+		}
+		#photo {
+			border: 5px;
+			width: 200px;
+			height: 200px;
+		}
+
+		.chkScore {
+			margin: 50px;
+			border: 5px;
+			background-color: blue;
+			padding: 20px;
+			font-size: 50px;
+			margin : 50px auto;
+			color: white;
+		}
+		.choice {
+			background-color: white;
+			display: inline-block;
+			margin: 10px auto;
+			padding: 10px;
+			font-size: 25px;
+		}
+		.output {
+			background-color: black;
+			display: block;
+			margin: 10px auto;
+			padding: 20px;
+			font-size: 30px;
+			color: white;
+		}
+		.score {
+			margin-top: 200px;
+			text-align: center;
+			font-size: 50px;
+			background-color: black;
+			color: white;
+			padding: 50px;
+		}
+		button {
+			font-family: fontcraft;
+		}
+		.re {
+			text-align: center;
+			font-size: 50px;
+			display: block;
+			background-color: black;
+			color: white;
+			padding: 50px;
+			margin: 0 auto;
+		}
+
+	</style>
 </head>
 <body>
 	<!-- 	{
 		"ref" : "https://www.proprofs.com/quiz-school/story.php?title=50_83"
 	} -->
-	<input class="counter" type="text" size="8" id="counter" />
-	<button class="chooseNumQ" onclick="chooseQ(10)" style="padding: 20px; background-color: red">10 ข้อ</button>
-	<button class="chooseNumQ" onclick="chooseQ(20)" style="padding: 20px; background-color: blue">20 ข้อ</button>
-	<div id="photo" style="width: 100px; height: 100px;"></div>
-	<div class ="output">Output goes here...</div>
-	<button id="choiceA" class="choice" style="padding: 20px; background-color: red"></button>
-	<button id="choiceB" class="choice" style="padding: 20px; background-color: red"></button>
-	<button id="choiceC" class="choice" style="padding: 20px; background-color: red"></button>
-	<button id="choiceD" class="choice" style="padding: 20px; background-color: red"></button>
-	<button class="chkScore" onclick="checkScore()" style="padding: 20px; background-color: red">ดูคะแนน</button>
-	<div class="score"></div>
+	<div class="bg">
+		<div id="logo">Harry Potter</div>
+		<div class="counter" id="counter"></div>
+		<button id="chooseNumQ10" class="chooseNumQ" onclick="chooseQ(10)">10 ข้อ</button>
+		<button id="chooseNumQ20" class="chooseNumQ" onclick="chooseQ(20)">20 ข้อ</button>
+		<center>
+		<div class="game">
+		<div id="photo" class="photo"></div>
+		<div class ="output">Output goes here...</div>
+		<button id="choiceA" class="choice""></button>
+		<button id="choiceB" class="choice""></button>
+		<button id="choiceC" class="choice""></button>
+		<button id="choiceD" class="choice""></button>
+		</div>
+		</center>
+
+		<center><button class="chkScore" onclick="checkScore()">ดูคะแนน</button></center>
+		<div class="score"></div>
+		<a class="re" href="index.html">เล่นใหม่</a>
+	</div>
+
 
 	<script src="jquery-3.3.1.min.js" charset="utf-8"></script>
 	<script type="text/javascript">
-		var seconds;
-		var item20 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
+				var seconds;
+		var item20 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19];
 		var item;
 		var iNum;
 		var score = 0;
 		var ans = [];
 
-		document.getElementById("counter").value='10';
+		$("#counter").html("10");
 		function intro () {
-			$(".output").hide();
-			$(".photo").hide();
+			$(".game").hide();
 			$(".counter").hide();
-			$(".choice").hide();
 			$(".chkScore").hide();
 			$(".score").hide();
+			$("#logo").show();
+			$(".re").hide();
 		}
 		intro();
 		function chooseQ (param) {
 			item = param;
 			$(".chooseNumQ").hide();
-			$(".output").show();
-			$(".photo").show();
 			$(".counter").show();
-			$(".choice").show();
+			$(".game").show();
 			seconds = 1;
+			$("#logo").hide();
 			display();
 		}
 		function rand () {
@@ -57,25 +178,29 @@
 				k = Math.floor(Math.random() * item20.length);
 				itNum = item20[k];
 				item20.splice(k, 1);
-
+				console.log(k);
+				console.log(item20[k]);
+				console.log(item20);
 			}
 			return itNum;
 		}
 		function display(){
 		    seconds-=1;
 		if(seconds==0 && item>0){
-		 	seconds = 10;
+		 	seconds = 15;
 		 	runQ(rand());
 		}
 		if(seconds<0 && item==0) {
-			$(".counter").hide();
-			$(".output").hide();
-			$(".photo").hide();
-			$(".choice").hide();
-			$(".chkScore").show();
+			$("#counter").hide();
+			$(".game").hide();
+			$(".chkScore").hide();
+			$("#logo").hide();
 			item = -1;
 		}
-		    document.getElementById("counter").value=seconds;
+		if(item==-1 || item==0){
+			$("#counter").hide();
+		}
+		    $("#counter").html(seconds);
 		    setTimeout("display()",1000);
 		}
 
@@ -105,14 +230,13 @@
 
 		$('.choice').click(function() {
 			if (item>0){
-				seconds = 10;
+				seconds = 15;
 		 		runQ(rand());
 			} else {
-				$(".counter").hide();
-				$(".output").hide();
-				$(".photo").hide();
-				$(".choice").hide();
+				$(".game").hide();
 				$(".chkScore").show();
+				$(".photo").hide();
+				$(".logo").hide();
 				item = -1;
 			}
 			if($(this).html() ==  ans[ans.length-1]){
@@ -125,6 +249,10 @@
 			$('.score').html(score);
 			$('.score').show();
 			$('.chkScore').hide();
+			$(".photo").hide();
+			$("#logo").hide();
+			$('.counter').hide();
+			$(".re").show();
 		}
 	</script>
 </body>
